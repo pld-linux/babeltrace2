@@ -73,9 +73,7 @@ Statyczne biblioteki Babeltrace 2.
 Summary:	API documentation for Babeltrace 2 libraries
 Summary(pl.UTF-8):	Dokumentacja API bibliotek Babeltrace 2
 Group:		Documentation
-%if "%{_rpmversion}" >= "4.6"
 BuildArch:	noarch
-%endif
 
 %description apidocs
 API documentation for Babeltrace 2 libraries.
