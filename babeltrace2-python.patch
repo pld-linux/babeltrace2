@@ -1,11 +1,11 @@
---- babeltrace2-2.0.2/src/bindings/python/bt2/Makefile.am.orig	2020-03-10 22:46:52.000000000 +0100
-+++ babeltrace2-2.0.2/src/bindings/python/bt2/Makefile.am	2020-04-13 20:56:49.729383809 +0200
-@@ -142,7 +142,7 @@
+--- babeltrace2-2.0.5/src/bindings/python/bt2/Makefile.am.orig	2023-06-24 08:47:27.275398523 +0200
++++ babeltrace2-2.0.5/src/bindings/python/bt2/Makefile.am	2023-06-24 08:48:20.738442222 +0200
+@@ -150,7 +150,7 @@ $(builddir)/bt2/native_bt.c: $(SWIG_INTE
  -include bt2/native_bt.d
  
  install-exec-local: build-python-bindings.stamp
--	@opts="--prefix=$(prefix) --record $(INSTALLED_FILES) --verbose --no-compile $(DISTSETUPOPTS)"; \
-+	@opts="--prefix=$(prefix) --record $(INSTALLED_FILES) --verbose --optimize=2 $(DISTSETUPOPTS)"; \
+-	@opts="--prefix=$(prefix) --exec-prefix=$(exec_prefix) --record $(INSTALLED_FILES) --verbose --no-compile $(DISTSETUPOPTS)"; \
++	@opts="--prefix=$(prefix) --exec-prefix=$(exec_prefix) --record $(INSTALLED_FILES) --verbose --optimize=2 $(DISTSETUPOPTS)"; \
  	if [ "$(DESTDIR)" != "" ]; then \
  		opts="$$opts --root=$(DESTDIR)"; \
  	fi; \
