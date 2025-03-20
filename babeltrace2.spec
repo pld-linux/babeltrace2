@@ -6,28 +6,37 @@
 Summary:	Trace Format Babel Tower
 Summary(pl.UTF-8):	Wieża Babel formatów narzędzi śledzących
 Name:		babeltrace2
-Version:	2.0.6
-Release:	3
+Version:	2.1.0
+Release:	1
 License:	MIT
 Group:		Applications/System
 Source0:	https://www.efficios.com/files/babeltrace/%{name}-%{version}.tar.bz2
-# Source0-md5:	cb3685e60672d014148e3337eeb6ef8d
+# Source0-md5:	031cf796503f71114dd8c834c8cbaa6d
 Patch0:		%{name}-python.patch
 URL:		https://babeltrace.org/
-BuildRequires:	autoconf >= 2.50
-BuildRequires:	automake >= 1:1.12
+BuildRequires:	asciidoc
+BuildRequires:	autoconf >= 2.69
+BuildRequires:	automake >= 1:1.13
+BuildRequires:	bison >= 2.5
 %{?with_apidocs:BuildRequires:	doxygen}
 BuildRequires:	elfutils-devel >= 0.154
+BuildRequires:	flex >= 2.5.35
 BuildRequires:	glib2-devel >= 1:2.28.0
+BuildRequires:	libstdc++-devel >= 6:4.7
 BuildRequires:	libtool >= 2:2
 BuildRequires:	libuuid-devel
 BuildRequires:	pkgconfig
 BuildRequires:	popt-devel
-%{?with_python:BuildRequires:	python3-devel >= 1:3.2}
+%if %{with python}
+BuildRequires:	python3-devel >= 1:3.4
+BuildRequires:	python3-setuptools
+%{?with_apidocs:BuildRequires:	python3-Sphinx}
+%endif
 BuildRequires:	rpm-build >= 4.6
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.507
 BuildRequires:	swig-python >= 2.0.0
+BuildRequires:	xmlto
 Requires:	elfutils >= 0.154
 Requires:	glib2 >= 1:2.28.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -94,6 +103,18 @@ Python 3 binding to Babeltrace 2 library.
 %description -n python3-babeltrace2 -l pl.UTF-8
 Wiązanie Pythona 3 do biblioteki Babeltrace 2.
 
+%package -n python3-babeltrace2-apidocs
+Summary:	API documentation for Babeltrace 2 Python binding
+Summary(pl.UTF-8):	Dokumentacja API wiązania Pythona do biblioteki Babeltrace2
+Group:		Documentation
+BuildArch:	noarch
+
+%description -n python3-babeltrace2-apidocs
+API documentation for Babeltrace 2 Python binding.
+
+%description -n python3-babeltrace2-apidocs -l pl.UTF-8
+Dokumentacja API wiązania Pythona do biblioteki Babeltrace2.
+
 %prep
 %setup -q
 %patch -P 0 -p1
@@ -107,7 +128,11 @@ Wiązanie Pythona 3 do biblioteki Babeltrace 2.
 %configure \
 	%{?with_apidocs:--enable-api-doc} \
 	%{?with_python:--enable-python-bindings} \
+%if %{with python} && %{with apidocs}
+	--enable-python-bindings-doc \
+%endif
 	--disable-silent-rules
+
 %{__make}
 
 %install
@@ -131,7 +156,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc ChangeLog LICENSE README.adoc mit-license.txt std-ext-lib.txt
+%doc ChangeLog LICENSE README.adoc std-ext-lib.md
 %attr(755,root,root) %{_bindir}/babeltrace2
 %attr(755,root,root) %{_libdir}/libbabeltrace2.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libbabeltrace2.so.0
@@ -179,4 +204,10 @@ rm -rf $RPM_BUILD_ROOT
 %{py3_sitedir}/bt2/*.py
 %{py3_sitedir}/bt2/__pycache__
 %{py3_sitedir}/bt2-%{version}-py*.egg-info
+
+%if %{with apidocs}
+%files -n python3-babeltrace2-apidocs
+%defattr(644,root,root,755)
+%doc doc/bindings/python/build/html/{_images,_static,*.html,*.js}
+%endif
 %endif

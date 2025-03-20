@@ -1,11 +1,11 @@
---- babeltrace2-2.0.5/src/bindings/python/bt2/Makefile.am.orig	2023-06-24 08:47:27.275398523 +0200
-+++ babeltrace2-2.0.5/src/bindings/python/bt2/Makefile.am	2023-06-24 08:48:20.738442222 +0200
-@@ -150,7 +150,7 @@ $(builddir)/bt2/native_bt.c: $(SWIG_INTE
- -include bt2/native_bt.d
+--- babeltrace2-2.1.0/src/bindings/python/bt2/Makefile.am.orig	2025-03-20 06:06:29.014543831 +0100
++++ babeltrace2-2.1.0/src/bindings/python/bt2/Makefile.am	2025-03-20 06:19:16.793365747 +0100
+@@ -180,7 +180,7 @@ export SETUPTOOLS_USE_DISTUTILS=stdlib
+ endif
  
  install-exec-local: build-python-bindings.stamp
--	@opts="--prefix=$(prefix) --exec-prefix=$(exec_prefix) --record $(INSTALLED_FILES) --verbose --no-compile $(DISTSETUPOPTS)"; \
-+	@opts="--prefix=$(prefix) --exec-prefix=$(exec_prefix) --record $(INSTALLED_FILES) --verbose --optimize=2 $(DISTSETUPOPTS)"; \
+-	$(pyinstall_verbose)opts="--prefix=$(prefix) --exec-prefix=$(exec_prefix) --record $(INSTALLED_FILES) --verbose --no-compile $(DISTSETUPOPTS)"; \
++	$(pyinstall_verbose)opts="--prefix=$(prefix) --exec-prefix=$(exec_prefix) --record $(INSTALLED_FILES) --verbose --optimize=2 $(DISTSETUPOPTS)"; \
  	if [ "$(DESTDIR)" != "" ]; then \
  		opts="$$opts --root=$(DESTDIR)"; \
  	fi; \
