@@ -1,17 +1,17 @@
 #
 # Conditional build:
 %bcond_without	apidocs	# API documentation
-%bcond_without	python	# Python binding
+%bcond_without	python	# Python (3.x) binding
 #
 Summary:	Trace Format Babel Tower
 Summary(pl.UTF-8):	Wieża Babel formatów narzędzi śledzących
 Name:		babeltrace2
-Version:	2.1.0
+Version:	2.1.1
 Release:	1
 License:	MIT
 Group:		Applications/System
 Source0:	https://www.efficios.com/files/babeltrace/%{name}-%{version}.tar.bz2
-# Source0-md5:	031cf796503f71114dd8c834c8cbaa6d
+# Source0-md5:	f58e631424e8bc3a4e0bd7de06069d64
 Patch0:		%{name}-python.patch
 URL:		https://babeltrace.org/
 BuildRequires:	asciidoc
